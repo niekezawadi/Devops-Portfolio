@@ -1,0 +1,100 @@
+---
+# A3 - Eigen playbook-experiment 2: Docker installeren en een container draaien
+#
+# Waar A2 een pakket installeert dat in de standaardrepository zit, komt Docker
+# uit een eigen repository. Die moet eerst toegevoegd worden, met bijbehorende
+# GPG-sleutel. Dat zijn vier stappen die je bij handmatig installeren vergeet
+# op te schrijven - en precies daarom horen ze in een playbook.
+#
+# Uitvoeren:  ansible-playbook -v docker.yml
+# Controle:   sudo docker ps   en   curl http://192.0.2.3:8080
+#
+# Let op: deze heeft internet nodig en duurt enkele minuten.
+
+- name: Docker installeren en testen met een container
+  hosts: webservers
+  become: yes
+
+  vars:
+    test_container: a3-nginx
+    test_poort: 8080
+
+  tasks:
+    - name: VEREISTE PAKKETTEN VOOR HTTPS-REPOSITORIES
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - software-properties-common
+          - python3-pip
+        state: present
+        update_cache: yes
+
+    - name: GPG-SLEUTEL VAN DOCKER TOEVOEGEN
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    # ansible_distribution_release is een fact. Op de DEVASC VM wordt dat
+    # "focal". Zo werkt hetzelfde playbook ook op een andere Ubuntu-versie.
+    - name: DOCKER-REPOSITORY TOEVOEGEN
+      apt_repository:
+        repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        filename: docker
+
+    - name: DOCKER ENGINE INSTALLEREN
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+
+    - name: DOCKER STARTEN EN INSCHAKELEN BIJ HET OPSTARTEN
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    # De module docker_container praat met Docker via een Python-library.
+    # Zonder deze stap: "Failed to import the required Python library".
+    - name: PYTHON-MODULE DOCKER INSTALLEREN
+      pip:
+        name: docker
+        state: present
+
+    - name: GEBRUIKER DEVASC IN DE GROEP DOCKER ZETTEN
+      user:
+        name: devasc
+        groups: docker
+        append: yes
+      # Let op: dit werkt pas na opnieuw inloggen. Groepslidmaatschap wordt
+      # gelezen bij het aanmaken van je sessie, niet erna.
+
+    - name: TESTCONTAINER DRAAIEN
+      docker_container:
+        name: "{{ test_container }}"
+        image: nginx:alpine
+        state: started
+        restart_policy: unless-stopped
+        published_ports:
+          - "{{ test_poort }}:80"
+
+    - name: WACHTEN TOT NGINX LUISTERT
+      wait_for:
+        port: "{{ test_poort }}"
+        timeout: 60
+
+    - name: CONTROLEREN OF DE CONTAINER ANTWOORDT
+      uri:
+        url: "http://192.0.2.3:{{ test_poort }}"
+        status_code: 200
+      register: resultaat
+
+    - name: RESULTAAT TONEN
+      debug:
+        msg: "nginx antwoordt op poort {{ test_poort }} met status {{ resultaat.status }}"
