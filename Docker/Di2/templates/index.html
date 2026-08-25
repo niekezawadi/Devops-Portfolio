@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weer opvragen &mdash; Ap4</title>
+  <style>
+    body   { font-family: system-ui, sans-serif; max-width: 640px;
+             margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1     { font-size: 1.5rem; margin-bottom: .3rem; }
+    .sub   { color: #666; margin-top: 0; font-size: .92rem; }
+    form   { background: #f2f4f7; padding: 1.2rem; border-radius: 6px;
+             margin: 1.5rem 0; }
+    label  { display: block; margin-top: .8rem; font-weight: 600;
+             font-size: .88rem; }
+    input[type=text], select {
+             width: 100%; padding: .5rem; margin-top: .25rem;
+             border: 1px solid #c3c8d0; border-radius: 4px;
+             box-sizing: border-box; font-size: 1rem; }
+    .check { margin-top: .9rem; font-weight: 400; font-size: .92rem; }
+    .check input { margin-right: .4rem; }
+    button { margin-top: 1.1rem; padding: .55rem 1.4rem; font-size: 1rem;
+             background: #2c5b8e; color: #fff; border: 0; border-radius: 4px;
+             cursor: pointer; }
+    button:hover { background: #23496f; }
+    .fout  { background: #fbeae7; border-left: 4px solid #a6392c;
+             padding: .8rem 1rem; margin: 1rem 0; }
+    .kaart { border: 1px solid #dde1e7; border-radius: 6px; overflow: hidden; }
+    .kop   { background: #2c5b8e; color: #fff; padding: .9rem 1.1rem; }
+    .kop h2 { margin: 0; font-size: 1.15rem; }
+    .kop p  { margin: .2rem 0 0; font-size: .82rem; opacity: .85; }
+    dl     { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1.2rem;
+             margin: 0; padding: 1.1rem; }
+    dt     { font-weight: 600; color: #4a5160; font-size: .9rem; }
+    dd     { margin: 0; font-size: .95rem; }
+    table  { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { text-align: left; padding: .45rem 1.1rem;
+             border-top: 1px solid #eceff3; }
+    th     { background: #f7f8fa; font-size: .78rem; text-transform: uppercase;
+             letter-spacing: .05em; color: #666; }
+  </style>
+</head>
+<body>
+
+  <h1>Weer opvragen</h1>
+  <p class="sub">Ap4 &mdash; dezelfde applicatie als Ap3, maar met een webformulier.</p>
+
+  <form method="post" action="/">
+    <label for="plaats">Plaats</label>
+    <input type="text" id="plaats" name="plaats" required
+           placeholder="bijvoorbeeld Leuven"
+           value="{{ ingevuld.get('plaats', '') }}">
+
+    <label for="eenheid">Temperatuur in</label>
+    <select id="eenheid" name="eenheid">
+      <option value="celsius"{% if ingevuld.get('eenheid') == 'celsius' %} selected{% endif %}>Celsius</option>
+      <option value="fahrenheit"{% if ingevuld.get('eenheid') == 'fahrenheit' %} selected{% endif %}>Fahrenheit</option>
+    </select>
+
+    <label class="check">
+      <input type="checkbox" name="voorspelling" value="ja"
+             {% if ingevuld.get('voorspelling') %}checked{% endif %}>
+      Toon ook de voorspelling voor zeven dagen
+    </label>
+
+    <button type="submit">Weer opvragen</button>
+  </form>
+
+  {% if fout %}
+    <p class="fout">{{ fout }}</p>
+  {% endif %}
+
+  {% if resultaat %}
+    <div class="kaart">
+      <div class="kop">
+        <h2>{{ resultaat.plaats }}</h2>
+        <p>{{ resultaat.lat }}, {{ resultaat.lon }} &middot; {{ resultaat.tijdzone }}</p>
+      </div>
+
+      <dl>
+        <dt>Toestand</dt>       <dd>{{ resultaat.omschrijving }}</dd>
+        <dt>Temperatuur</dt>    <dd>{{ resultaat.temperatuur }}</dd>
+        <dt>Luchtvochtigheid</dt><dd>{{ resultaat.vochtigheid }}</dd>
+        <dt>Wind</dt>           <dd>{{ resultaat.wind }}</dd>
+      </dl>
+
+      {% if resultaat.voorspellingen %}
+        <table>
+          <tr><th>Datum</th><th>Min</th><th>Max</th><th>Verwachting</th></tr>
+          {% for dag in resultaat.voorspellingen %}
+            <tr>
+              <td>{{ dag.datum }}</td>
+              <td>{{ dag.min }}</td>
+              <td>{{ dag.max }}</td>
+              <td>{{ dag.omschrijving }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% endif %}
+    </div>
+  {% endif %}
+
+</body>
+</html>
