@@ -1,0 +1,6 @@
+# Inventory - zelfde opzet als lab 7.4.8
+# 192.0.2.3 is een dummy-adres op de dummy0-interface van de DEVASC VM.
+# Ansible logt daar via SSH op in, alsof het een aparte server was.
+
+[webservers]
+192.0.2.3 ansible_ssh_user=devasc ansible_ssh_pass=Cisco123!

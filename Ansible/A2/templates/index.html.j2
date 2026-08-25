@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <title>{{ site_titel }}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 620px;
+           margin: 3rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1   { color: #2c5b8e; margin-bottom: .3rem; }
+    .sub { color: #666; margin-top: 0; }
+    dl   { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1.2rem;
+           background: #f2f4f7; padding: 1.1rem; border-radius: 6px; }
+    dt   { font-weight: 600; color: #4a5160; font-size: .9rem; }
+    dd   { margin: 0; font-size: .95rem; }
+    footer { margin-top: 1.5rem; font-size: .85rem; color: #777; }
+  </style>
+</head>
+<body>
+
+  <h1>{{ site_titel }}</h1>
+  <p class="sub">Deze pagina is niet met de hand gemaakt.</p>
+
+  <p>Ansible heeft haar geschreven vanuit een Jinja2-template, en de waarden
+     hieronder zelf opgehaald bij het opstarten van het playbook. Ze staan
+     nergens in mijn code.</p>
+
+  <dl>
+    <dt>Student</dt>           <dd>{{ student }}</dd>
+    <dt>Hostnaam</dt>          <dd>{{ ansible_hostname }}</dd>
+    <dt>Besturingssysteem</dt> <dd>{{ ansible_distribution }} {{ ansible_distribution_version }}</dd>
+    <dt>Kernel</dt>            <dd>{{ ansible_kernel }}</dd>
+    <dt>Architectuur</dt>      <dd>{{ ansible_architecture }}</dd>
+    <dt>Processorkernen</dt>   <dd>{{ ansible_processor_vcpus | default('onbekend') }}</dd>
+    <dt>Werkgeheugen</dt>      <dd>{{ ansible_memtotal_mb }} MB</dd>
+    <dt>IP-adres</dt>          <dd>{{ ansible_default_ipv4.address | default('onbekend') }}</dd>
+  </dl>
+
+  <footer>
+    Dezelfde template op een andere machine geeft een andere pagina.
+    Dat is het verschil tussen een template en een bestand kopiëren.
+  </footer>
+
+</body>
+</html>

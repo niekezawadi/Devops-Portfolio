@@ -1,0 +1,90 @@
+---
+# A2 - Eigen playbook-experiment: webserver met een specifieke home page
+#
+# Bouwt voort op lab 7.4.8. Dat lab installeert Apache en verzet de poort met
+# lineinfile. Dit playbook doet drie dingen die het lab niet doet:
+#
+#   1. het zet de poort terug op 80, wat er ook stond
+#   2. het plaatst een eigen homepage vanuit een Jinja2-template
+#   3. het controleert zijn eigen resultaat met de uri-module
+#
+# Uitvoeren:  ansible-playbook -v webserver.yml
+# Controle:   curl http://192.0.2.3   of in Chromium naar 192.0.2.3
+
+- name: Apache installeren en voorzien van een eigen homepage
+  hosts: webservers
+  become: yes
+
+  vars:
+    site_titel: "DevOps-experiment A2"
+    student: "Nieke Karhamba Zawadi"
+    doc_root: /var/www/html
+
+  tasks:
+    - name: INSTALL APACHE2
+      apt:
+        name: apache2
+        update_cache: yes
+        state: present
+
+    # Het lab zette de poort op 8081. Dit playbook zet hem terug op 80.
+    # De regexp matcht elke Listen-regel die aan het begin van een regel staat,
+    # dus ook "Listen 8081". De ingesprongen "Listen 443" blijft ongemoeid.
+    - name: APACHE2 LISTEN ON PORT 80
+      lineinfile:
+        dest: /etc/apache2/ports.conf
+        regexp: '^Listen '
+        line: 'Listen 80'
+        state: present
+      notify: RESTART APACHE2
+
+    - name: APACHE2 VIRTUALHOST ON PORT 80
+      lineinfile:
+        dest: /etc/apache2/sites-available/000-default.conf
+        regexp: '^<VirtualHost '
+        line: '<VirtualHost *:80>'
+        state: present
+      notify: RESTART APACHE2
+
+    # Het verschil met het lab: geen bestaand bestand aanpassen, maar een
+    # nieuw bestand genereren uit een template met gegevens van de machine zelf.
+    - name: EIGEN HOMEPAGE PLAATSEN
+      template:
+        src: templates/index.html.j2
+        dest: "{{ doc_root }}/index.html"
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      notify: RESTART APACHE2
+
+    - name: APACHE2 STARTEN EN INSCHAKELEN BIJ HET OPSTARTEN
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    # Handlers draaien normaal pas aan het einde van het playbook. De controle
+    # hieronder zou dan mislukken, want Apache luistert op dat moment nog op de
+    # oude poort. flush_handlers dwingt af dat ze nu al uitgevoerd worden.
+    - name: HANDLERS NU AL UITVOEREN
+      meta: flush_handlers
+
+    # Zelfcontrole: het playbook test zijn eigen resultaat.
+    - name: CONTROLEREN OF DE SITE ANTWOORDT
+      uri:
+        url: http://192.0.2.3
+        return_content: yes
+        status_code: 200
+      register: resultaat
+
+    - name: TOON DE TITEL VAN DE PAGINA
+      debug:
+        msg: "De server antwoordt met status {{ resultaat.status }}"
+
+  handlers:
+    # Een handler draait alleen als een taak hem met notify oproept,
+    # en hooguit een keer per playbook - ook als drie taken hem oproepen.
+    - name: RESTART APACHE2
+      service:
+        name: apache2
+        state: restarted
