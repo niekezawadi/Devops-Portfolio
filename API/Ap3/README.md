@@ -103,5 +103,7 @@ Een cijfercode voor de weerstoestand. Ik zet die met een dictionary om naar lees
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over die 200 met een leeg resultaat —
-     dat je eerst dacht dat het werkte tot je een onbestaande plaats intypte. -->
+Het interessantste aan dit experiment was dat ik zelf moest uitzoeken hoe je twee API's aan elkaar koppelt — de output van de geocoding-call wordt letterlijk de input van de forecast-call. Ik ben eerst vergeten om de foutafhandeling toe te voegen, waardoor een verkeerde plaatsnaam het script deed crashen met een onduidelijke `KeyError`; door dat expliciet op te vangen met een `ValueError` en een duidelijke boodschap werd het script veel gebruiksvriendelijker.
+```
+
+---
