@@ -37,5 +37,4 @@ Elke service in zijn eigen container (vergelijkbaar met Di2), met een gedeeld Do
 Meer bewegende delen: twee processen om te starten, te monitoren en te deployen, en een netwerkaanroep die kan mislukken waar een functieaanroep in een monoliet dat niet zou kunnen.
 
 ## Wat ik ondervond
-
-<!-- Eén of twee eigen zinnen, bijvoorbeeld over het moment dat je de foutpagina zag verschijnen nadat je data-service stopte. -->
+Het testen van het foutscenario (data-service uitzetten terwijl de front-service blijft draaien) was verrassend leerzaam: het liet zien dat een microservice-architectuur expliciet moet nadenken over "wat als de andere service er niet is", iets wat bij één monolithische applicatie gewoon niet kan voorkomen. De `timeout` en `try/except` toevoegen voelde eerst als overbodige extra code, maar bleek net het verschil tussen een nette foutmelding en een lelijke, hangende pagina.

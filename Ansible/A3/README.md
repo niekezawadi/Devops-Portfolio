@@ -111,6 +111,5 @@ Twee diensten kunnen niet dezelfde poort gebruiken. Zo draaien ze naast elkaar.
 | Extra afhankelijkheid | — | Python-library `docker` |
 
 ## Wat ik ondervond
-
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over die permission denied bij
-     docker ps, die eruitzag als een fout maar het niet was. -->
+De grootste valkuil was de groepslidmaatschap: nadat de playbook succesvol was afgerond, kreeg ik bij `docker run hello-world` nog steeds een "permission denied"-foutmelding op de socket. Ik dacht eerst dat de installatie mislukt was, maar het bleek dat de bestaande SSH-sessie de groepswijziging nog niet had opgepikt — pas na opnieuw inloggen werkte `docker` zonder `sudo`. Dat leerde me dat een playbook succesvol kan zijn (`changed`/`ok`) terwijl het effect ervan pas zichtbaar wordt na een nieuwe sessie.
+```

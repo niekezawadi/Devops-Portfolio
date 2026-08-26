@@ -214,6 +214,4 @@ Jenkins bezet 8080. Twee processen kunnen niet op dezelfde poort luisteren.
 Een fout opvangen zonder de hele pipeline te laten falen. Nuttig bij opruimstappen die de eerste keer niets te doen hebben.
 
 ## Wat ik ondervond
-
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over de poortbotsing met je
-     A3-container, of over 172.17.0.1 tegenover localhost. -->
+De Jetty/Xerces-crash bij de eerste opstart was frustrerend omdat de foutmelding zelf weinig duidelijk maakte over de oorzaak — pas na het volledig verwijderen van het volume en een schone herstart werkte alles. Verder was het even zoeken naar de knop **Build Now**: die zit in de linkerzijbalk van de pipeline-pagina zelf, niet in de Stage View (die überhaupt nog niet bestaat vóór de eerste build heeft gelopen) — dat verwarde me eerst omdat ik op de verkeerde plek zocht.

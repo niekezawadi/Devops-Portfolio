@@ -33,5 +33,8 @@ Een bind mount wijst naar een specifiek pad op de host — jij kiest waar. Een n
 Het `nginx:alpine`-image is gebaseerd op Alpine Linux, dat standaard geen `bash` heeft geïnstalleerd — enkel de kleinere `sh`.
 
 ## Wat ik ondervond
+Het gebruik van `docker system df` liet me zien hoeveel opgestapelde, ongebruikte images er ondertussen stonden van eerdere oefeningen (Di1, Di2, Di3) — na een paar keer bouwen en herbouwen loopt dat sneller op dan ik verwachtte. `docker system prune` daarna gebruiken voelde in het begin wat eng aan (bang om iets belangrijks te verwijderen), tot ik besefte dat het bewust nooit volumes met data aanraakt tenzij je dat expliciet vraagt met `--volumes`.
+```
 
-<!-- Eén of twee eigen zinnen, bijvoorbeeld over het verschil dat je zag tussen -it en -d. -->
+
+---

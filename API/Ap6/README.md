@@ -121,6 +121,5 @@ Anders gooit Flask zelf een 415-fout voor ik mijn eigen leesbare melding kan ter
 | Ap6 | wat dat formulier uit Ap4 nu eigenlijk verstuurt |
 
 ## Wat ik ondervond
-
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over de Content-Type die curl
-     stilzwijgend invult, of over test 3 en 4 die je verwachtte te zien lukken. -->
+Ik liep eerst vast op een `AttributeError` omdat ik `@app.post()` had gebruikt zoals in nieuwere Flask-tutorials online — pas na het controleren van de geïnstalleerde Flask-versie (`pip show flask`, versie 1.1.2) besefte ik dat die decorator hier niet bestaat. Door terug te schakelen naar `@app.route(..., methods=["POST"])` werkte alles meteen. Dit leerde me om altijd eerst de geïnstalleerde versie te checken voor ik code van het internet overneem.
+```

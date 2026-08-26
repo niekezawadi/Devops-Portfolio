@@ -48,4 +48,7 @@ Nog niet volledig: een productiesysteem gebruikt ook een salt en een trager hash
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen, bijvoorbeeld over het moment dat je zag dat rick en allan dezelfde hash hadden. -->
+Het meest overtuigende moment was de database naast elkaar te zien: bij `plain_users` stond `cisco123` letterlijk leesbaar, en dat voelde meteen fout aan. Nog verrassender was dat `rick` en `allan` met hetzelfde wachtwoord exact dezelfde hash kregen in `hashed_users` — dat maakte in één oogopslag duidelijk waarom hashen alleen niet genoeg is en waarom salting in echte systemen noodzakelijk is.
+```
+
+---
