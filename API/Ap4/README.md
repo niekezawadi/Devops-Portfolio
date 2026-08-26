@@ -23,9 +23,9 @@ python3 ap4_app.py
 
 Open daarna `http://127.0.0.1:5000` in Chromium.
 
-![Het formulier](screenshots/01-formulier.png)
-![Resultaat met voorspelling](screenshots/02-resultaat.png)
-![Onbestaande plaats](screenshots/03-fout.png)
+![Het formulier](Img/01-formulier.png)
+![Resultaat met voorspelling](Img/02-resultaat.png)
+![Onbestaande plaats](Img/03-fout.png)
 
 ## Structuur
 
