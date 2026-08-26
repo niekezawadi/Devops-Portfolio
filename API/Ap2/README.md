@@ -27,4 +27,4 @@ Bij een foutieve HTTP-statuscode (4xx/5xx) stopt het script direct met een duide
 
 ## Wat ik ondervond
 
-Het grootste verschil met de vorige oefening was dat ik hier niet meer zelf naar de JSON hoefde te kijken — Python telt en groepeert voor mij via een gewone dictionary met `.get()`.
+Het grootste verschil met de vorige oefening was dat ik hier niet meer zelf naar de JSON hoefde te kijken Python telt en groepeert voor mij via een gewone dictionary met `.get()`.
