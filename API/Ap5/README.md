@@ -118,6 +118,5 @@ Het token moet doorgegeven worden aan elke beveiligde call. In een script haal i
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over die enkele quotes rond het
-     wachtwoord, of over het verschil tussen wat je in de terminal ziet en
-     wat er echt over de lijn gaat. -->
+Bij het testen merkte ik dat ik soms een 400 in plaats van de verwachte 401 kreeg wanneer ik de header-naam net verkeerd typte (`X-API-Key` met een kleine letter ergens) — dat leerde me dat REST-API's headers wél hoofdlettergevoelig kunnen behandelen aan de kant van het framework, ook al zegt de HTTP-standaard dat headernamen case-insensitive zouden moeten zijn. Na het corrigeren van de header liep de volledige lifecycle in één keer door.
+```
