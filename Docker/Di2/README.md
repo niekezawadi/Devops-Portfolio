@@ -51,5 +51,7 @@ Docker maakt standaard een virtueel netwerk (`docker0`/`bridge`) met NAT naar de
 5000 kan al bezet zijn door andere Flask-experimenten, 8080 door Jenkins of de Di1-container. 5001 is vrij.
 
 ## Wat ik ondervond
+Het bouwen van mijn eigen image liet zien hoe rechtstreeks de code uit Ap4 hergebruikt kon worden — enkel een Dockerfile en een requirements.txt waren nodig om exact dezelfde applicatie in een draagbare container te krijgen. Ik heb wel eerst vergeten de `templates/`-map mee te kopiëren in de Dockerfile, waardoor de container opstartte maar een `TemplateNotFound`-fout gaf; na het toevoegen van `COPY templates/ templates/` werkte alles.
+```
 
-<!-- Eén of twee eigen zinnen, bijvoorbeeld over het moment dat de weerapp gewoon werkte zonder dat je iets voor netwerktoegang hoefde te doen. -->
+---
