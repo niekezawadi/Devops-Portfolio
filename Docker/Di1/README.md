@@ -23,7 +23,7 @@ De eerste keer dat ik het script draaide, faalde `docker run` met `Conflict. The
 4. `docker run` met poort 8080 en de naam `samplerunning`.
 
 ![Build en run](Img/02-dockerfile-built.png)
-![App via Docker](Img/03-docker-app-running.png)
+![App via Docker](Img/03-docker-app.png)
 
 Merk het IP-verschil op: lokaal `127.0.0.1`, via Docker `172.17.0.1` — het adres van de Docker-bridge, want de aanroep komt nu van buiten de container.
 
