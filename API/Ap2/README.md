@@ -15,7 +15,7 @@ python3 process_books.py
 
 ## Resultaat
 
-![Output van het script](img/01-output.png)
+![Output van het script](Img/01-output.png)
 
 ## Mogelijke vragen
 
