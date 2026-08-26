@@ -1,0 +1,8 @@
+# Gegenereerd met: pip freeze > requirements.txt
+# Herstellen met : pip install -r requirements.txt
+
+certifi>=2019.9.11
+chardet>=3.0.4
+idna>=2.8
+requests>=2.22.0,<3.0
+urllib3>=1.25.1
