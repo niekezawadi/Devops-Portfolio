@@ -52,4 +52,5 @@ Dat pakt de laatste `python:latest`-tag. Voor een lab is dat prima; in productie
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen, bijvoorbeeld over de poortbotsing met Jenkins/A3 die je vooraf moest oplossen. -->
+Ik liep vast op een `Conflict. The container name "/samplerunning" is already in use`-foutmelding, en dacht eerst dat het aan de poort lag. Pas na het controleren van `docker ps -a` zag ik dat een compleet andere oefening (Jenkins) toevallig dezelfde containernaam gebruikte op een andere poort — dat leerde me dat containernamen systeembreed uniek moeten zijn, los van de poort. Door de naam in mijn script aan te passen naar iets unieks (`di1running`) was het probleem meteen opgelost.
+```
