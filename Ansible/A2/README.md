@@ -119,5 +119,8 @@ Dat is de gebruiker waaronder Apache draait. De webserver moet het bestand kunne
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over het verschil dat je zag tussen
-     de eerste en de tweede run, of over de poort die het lab op 8081 had gezet. -->
+Ik dacht dat mijn playbook volledig idempotent was, tot ik het een tweede keer draaide en toch `changed=2` kreeg in plaats van `changed=0`. Na wat zoeken bleek dat te komen door `{{ ansible_date_time.iso8601 }}` in mijn template: dat fact geeft elke keer een nieuw tijdstip terug, waardoor de gegenereerde homepage telkens net iets anders is en Ansible dus altijd een wijziging detecteert. Dat liet me goed het verschil zien tussen "de taak lukt elke keer" en "de taak verandert écht niets" — pas na het beseffen dat een tijdstempel per definitie nooit twee keer gelijk is, snapte ik waarom idempotentie hier bewust doorbroken werd.
+```
+
+
+---
