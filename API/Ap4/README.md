@@ -122,5 +122,5 @@ Die laatste rij is het punt van dit experiment: de manier waarop je een API aans
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen. Bijvoorbeeld over het aankruisvakje dat niets
-     meestuurt als het niet aangevinkt is — dat is een klassieke verrassing. -->
+Het omzetten van mijn terminal-script naar een webformulier ging vlotter dan verwacht omdat de kernfunctie (`get_coordinates`/`get_weather`) ongewijzigd kon blijven — enkel de manier waarop de input binnenkomt (`request.form` in plaats van `sys.argv`) en de output getoond wordt (HTML-template in plaats van `print()`) veranderde. De Fahrenheit-omrekening toevoegen was een leuke extra die me deed nadenken over waar in de applicatie zo'n omzetting eigenlijk thuishoort.
+```
