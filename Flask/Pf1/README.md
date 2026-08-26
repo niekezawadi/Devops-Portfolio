@@ -32,4 +32,9 @@ Een eigenschap van Flask's `request`-object die het IP-adres van de client terug
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen. -->
+## Wat ik ondervond
+
+Dit was mijn eerste kennismaking met Flask binnen dit vak, dus vooral de basisstructuur (`@app.route`, `render_template`, `request.form`) moest ik even laten bezinken. Zodra ik begreep dat `request.method` bepaalt welke tak van de functie wordt uitgevoerd, viel de rest van de latere, complexere Flask-oefeningen (Pf2, Pf3) een stuk makkelijker te volgen.
+```
+
+---
