@@ -47,4 +47,7 @@ De standaardpoort voor MySQL/MariaDB. Zou je een tweede databasecontainer ernaas
 
 ## Wat ik ondervond
 
-<!-- Eén of twee eigen zinnen, bijvoorbeeld over het moment dat de rij "Nieke" er na de herstart nog stond. -->
+Het meest overtuigende bewijs van hoe volumes werken was de rij `(1, 'Nieke')` terug te zien na het volledig verwijderen van de originele container — dat maakte concreet dat "de data" en "de container" twee gescheiden dingen zijn in Docker. Ik was eerst even in de war omdat ik dacht dat verwijderen van de container ook de data zou wissen, tot ik besefte dat enkel `docker volume rm` dat effect heeft.
+```
+
+---
